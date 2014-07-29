@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+var debug = require('debug')('gate_server');
+var app = require('../app');
+
+app.set('port', process.env.PORT || 40080);
+
+var server = app.listen(app.get('port'), function() {
+
+  debug('Gate server listening on port ' + server.address().port);
+});

@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-xs-6.col-xs-offset-3
+        div.row.row-centered
+          div.col-xs-2.col-centered.col-fixed
+            button.btn.btn-default.btn-block.btn-lg.keypad-button(type='button') 1
+          div.col-xs-2.col-centered.col-fixed
+            button.btn.btn-default.btn-block.btn-lg.keypad-button(type='button') 2
+          div.col-xs-2.col-centered.col-fixed
+            button.btn.btn-default.btn-block.btn-lg.keypad-button(type='button') 3
+      div.col-xs-6.col-xs-offset-3
+          button.btn.btn-primary(type='button') 지우기
+
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
