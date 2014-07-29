@@ -2,16 +2,45 @@ extends layout
 
 block content
   div.container
-    div.row
-      div.col-xs-6.col-xs-offset-3
-        div.row.row-centered
-          div.col-xs-2.col-centered.col-fixed
-            button.btn.btn-default.btn-block.btn-lg.keypad-button(type='button') 1
-          div.col-xs-2.col-centered.col-fixed
-            button.btn.btn-default.btn-block.btn-lg.keypad-button(type='button') 2
-          div.col-xs-2.col-centered.col-fixed
-            button.btn.btn-default.btn-block.btn-lg.keypad-button(type='button') 3
-      div.col-xs-6.col-xs-offset-3
-          button.btn.btn-primary(type='button') 지우기
-
-  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+    h2.text-center IMRLAB 도어락 - 동방
+    h4.text-center Version 1.0
+    div.row.typed-key-list
+      div.col-xs-12
+        div.row
+          div.col-xs-3
+            button.btn.btn-success.btn-block.btn-lg.keypad-button(type='button') O
+          div.col-xs-3
+            button.btn.btn-danger.btn-block.btn-lg.keypad-button(type='button') X
+          div.col-xs-3
+            button.btn.btn-danger.btn-block.btn-lg.keypad-button(type='button') X
+          div.col-xs-3
+            button.btn.btn-danger.btn-block.btn-lg.keypad-button(type='button') X
+    form(role='form')
+      div.form-group
+        div.row
+          div.col-xs-12
+            div.row
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad1(type='button') 1
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad2(type='button') 2
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad3(type='button') 3
+            div.row
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad4(type='button') 4
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad5(type='button') 5
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad6(type='button') 6
+            div.row
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad7(type='button') 7
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad8(type='button') 8
+              div.col-xs-4
+                button.btn.btn-default.btn-block.btn-lg.keypad-button#pad9(type='button') 9
+          div.col-xs-12
+              button.btn.btn-primary.btn-block.keypad-clear(type='button') 다시 입력하기
+  script(src='./javascripts/index.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')

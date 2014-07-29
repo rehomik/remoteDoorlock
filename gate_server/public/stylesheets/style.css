@@ -1,27 +1,22 @@
 body {
     background-color: #eee;
-    padding-top: 40px;
-}
-
-/* centered columns styles */
-.row-centered {
-    text-align:center;
-}
-.col-centered {
-    display:inline-block;
-    float:none;
-    /* reset the text-align */
-    text-align:left;
-    /* inline-block space fix */
-    margin-right:-4px;
-}
-
-.col-fixed {
-    /* custom width */
-    width:100px;
+    padding-top: 20px;
 }
 
 .keypad-button {
 
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.typed-key-list {
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.keypad-clear {
+
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
