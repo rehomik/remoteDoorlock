@@ -3,49 +3,88 @@
  * Written by rehomik
  */
 
-var _typedKeyPadArray = [];
+function keyPadController() {
 
-var typeKeypad = function (key_pad_num, input_complete_callback) {
+  var _typedKeyPadArray = '';
 
-  _typedKeyPadArray.push(key_pad_num);
+  this.inputKey = function (key_pad_num, input_complete_callback) {
 
-  if (4 === _typedKeyPadArray.length) {
+    _typedKeyPadArray += key_pad_num;
 
-    input_complete_callback(true);
+    if (4 === _typedKeyPadArray.length) {
 
-    return;
+      input_complete_callback(true);
+
+      return;
+    }
+
+    input_complete_callback(false);
+
   }
 
-  input_complete_callback(false);
+  this.refreshTypedKeyColor = function (key_element) {
 
+    key_element.removeClass('btn-danger').addClass('btn-success').text('O');
+  }
+
+  this.clearTypedKeyColor = function () {
+
+    _typedKeyPadArray = '';
+
+    for (var i = 1; i < 5; ++i) {
+
+      var typed_pad_id = "#typedPad" + i;
+
+      $(typed_pad_id).removeClass('btn-success').addClass('btn-danger').text('X');
+    }
+  }
+
+  this.keyPadLength = function () {
+
+    return _typedKeyPadArray.length;
+  }
+
+  this.getTypedKeypadNumbers = function () {
+
+    return { keys: _typedKeyPadArray };
+  }
 }
 
-var refreshKeypadColor = function (data_array) {
+var _keyPadCtr = new keyPadController();
 
-  var data_length = data_array.length;
-
-  var typed_pad_id = "#typedPad" + data_length;
-
-  $(typed_pad_id).removeClass("btn-danger").addClass("btn-success").text('O');
-}
-
-$('#pad1, #pad2, #pad3, #pad4, #pad5, #pad6, #pad7, #pad8, #pad9').each(function addClick() {
+$('#pad1, #pad2, #pad3, #pad4, #pad5, #pad6, #pad7, #pad8, #pad9, #pad0').each(function addClick() {
 
   $(this).click(function onClick() {
 
     var key_pad_num = $(this).text();
 
-    typeKeypad(key_pad_num, function inputComplete(result) {
+    _keyPadCtr.inputKey(key_pad_num, function inputComplete(result) {
 
-      refreshKeypadColor(_typedKeyPadArray);
+      var data_length = _keyPadCtr.keyPadLength();
+      var typed_pad_id = "#typedPad" + data_length;
+
+      _keyPadCtr.refreshTypedKeyColor($(typed_pad_id));
 
       if (result) {
 
-        console.log("confirm");
+        // Send keypad data to server
+        $.ajax({
+          type: 'POST',
+          url: '/',
+          data: _keyPadCtr.getTypedKeypadNumbers(),
+          success: function (data) {
+
+            _keyPadCtr.clearTypedKeyColor();
+          }
+        });
 
         return;
       }
     });
   });
+});
 
+$('#padClear').click(function onClick() {
+
+  _keyPadCtr.clearTypedKeyColor();
 });

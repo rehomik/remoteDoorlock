@@ -3,28 +3,14 @@
  * written by rehomik
  */
 
-var debug = require('debug')('gate_server');
-var http = require('http');
+var door = require('./door');
 
-exports.sendSignalToDoor = function (resultCallback) {
+exports.sendSignalToDoor = function (onComplateCallback) {
 
-  debug("Send signal to door server");
+  door.locker.request(onComplateCallback);
+};
 
-  var opt = {
-    host: "10.0.1.9",
-    port: "49180",
-    method: "GET",
-    headers: {
-      "Content-Type": "Content-Type: text/html",
-      "User-Agent": "Door lock Gate Server 0.1",
-      "Connection": "close"
-    }
-  };
+exports.comparePassword = function (typed_key_string, resultCallback) {
 
-  var http_req = http.request(opt, function (res) {
-
-    resultCallback();
-  });
-
-  http_req.end();
+  door.auth.identify(typed_key_string, resultCallback);
 };

@@ -6,16 +6,35 @@ var debug = require('debug')('gate_server');
 
 router.get('/', function(req, res) {
 
-//  restful_api.sendSignalToDoor(function onComplete() {
-//
-//    debug("Request complete.");
-//
-//    res.render('index', { title: 'Express' });
-//
-//  });
-
   res.render('index', { title: 'Express' });
 
+});
+
+router.post('/', function (req, res) {
+
+  var typed_key_array = req.body.keys;
+
+  restful_api.comparePassword(typed_key_array, function (result) {
+
+    if (result) {
+
+      restful_api.sendSignalToDoor(function onComplete() {
+
+        debug("Request complete.");
+
+        res.json({
+          result: 'success'
+        });
+      });
+
+      return;
+    }
+
+    res.json({
+      result: 'fail',
+      msg: 'invalid password'
+    });
+  });
 });
 
 module.exports = router;
