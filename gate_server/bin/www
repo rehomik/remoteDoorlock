@@ -2,7 +2,7 @@
 var debug = require('debug')('gate_server');
 var app = require('../app');
 
-app.set('port', process.env.PORT || 40080);
+app.set('port', process.env.PORT || 8094);
 
 var server = app.listen(app.get('port'), function() {
 
