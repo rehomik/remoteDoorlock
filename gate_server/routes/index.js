@@ -6,7 +6,7 @@ var debug = require('debug')('gate_server');
 
 router.get('/', function(req, res) {
 
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'IMRLAB 도어락 - 동방' });
 
 });
 

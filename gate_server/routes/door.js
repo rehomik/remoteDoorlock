@@ -16,8 +16,8 @@ exports.locker = {
     debug("Send signal to door server");
 
     var opt = {
-      host: "10.0.1.9",
-      port: "49180",
+      host: "220.69.74.136",
+      port: "40080",
       method: "GET",
       headers: {
         "Content-Type": "Content-Type: text/html",
