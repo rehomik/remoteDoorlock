@@ -6,5 +6,6 @@ app.set('port', process.env.PORT || 8094);
 
 var server = app.listen(app.get('port'), function() {
 
-  debug('Gate server listening on port ' + server.address().port);
+  console.log('Gate server listening on port ' + server.address().port);
+  
 });

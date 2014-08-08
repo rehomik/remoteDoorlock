@@ -29,8 +29,8 @@ router.post('/', function (req, res) {
           return_code = "fail";
         }
 
-        res.json({
-
+        res.status(200).json({
+          
           result: return_code
         });
 

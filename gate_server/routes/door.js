@@ -13,7 +13,7 @@ exports.locker = {
 
   request: function (onCompleteCallback) {
 
-    debug("Send signal to door server");
+    console.log("Send signal to door server");
 
     var opt = {
       host: "220.69.74.136",
@@ -28,6 +28,8 @@ exports.locker = {
     };
 
     var http_req = http.request(opt, function (err, res, body) {
+
+      console.log("Response complete from door lock");
 
       if ( (!err) && (200 == res.statusCode) ) {
 
