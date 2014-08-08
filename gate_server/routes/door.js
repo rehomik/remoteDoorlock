@@ -21,14 +21,23 @@ exports.locker = {
       method: "GET",
       headers: {
         "Content-Type": "Content-Type: text/html",
-        "User-Agent": "Door lock Gate Server 0.1",
-        "Connection": "close"
+        "User-Agent": "IMRLAB Door lock Gate Server",
+        "Connection": "close",
+        "Content-Length": 0
       }
     };
 
-    var http_req = http.request(opt, function (res) {
+    var http_req = http.request(opt, function (err, res, body) {
 
-      onCompleteCallback();
+      if ( (!err) && (200 == res.statusCode) ) {
+
+        onCompleteCallback(true);
+
+        return;
+      }
+
+      onCompleteCallback(false);
+
     });
 
     http_req.end();
