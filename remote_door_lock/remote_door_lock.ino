@@ -68,6 +68,8 @@ void setup()
 		delay(WIFI_CONNECTION_WAIT_TIME);
 	}
 
+	Serial.println(SERVER_MSG_READY);
+	Serial.print(SERVER_MSG_IP);
 	Serial.println(WiFi.localIP());
 
 	digitalWrite(_redRedPin, LOW);
@@ -81,34 +83,14 @@ void loop()
 {
 	if (!_runPermission) return;
 
-	boolean is_reconnected = false;
-
-	// Check WiFi status
-	while (_wifiStatus != WL_CONNECTED)
-	{
-		initLED();
-
-		_wifiStatus = WiFi.begin(LOCAL_SSID, LOCAL_PW);	
-
-		delay(WIFI_CONNECTION_WAIT_TIME);
-
-		is_reconnected = true;
-	}
-
-	if (is_reconnected)
-	{
-		Serial.println(WiFi.localIP());
-
-		digitalWrite(_redRedPin, LOW);
-		digitalWrite(_GreenLedPin, HIGH);
-	}
-
-	// Receive data from client
 	WiFiClient client = _server.available();
 
+	// Receive data from client
 	if (client)
 	{
-		boolean current_line_is_blank = false;
+		Serial.println(OPEN_THE_GATE_BEGIN);
+
+		boolean current_lien_is_blank = true;
 
 		while (client.connected())
 		{
@@ -117,25 +99,27 @@ void loop()
 				char recv_byte = client.read();
 				Serial.write(recv_byte);
 
-				if ( (recv_byte == '\n') && (current_line_is_blank) )
-				{
+				if (recv_byte == '\n' && current_lien_is_blank) {
+
+					Serial.println(OPEN_THE_GATE_SUCCESS_MSG);
+					sendSignalToDoor();
+
 					client.println(SERVER_RESPONSE_200_OK);
 					client.println(SERVER_RESPONSE_CONTENT_TYPE_TEXT);
 					client.println(SERVER_RESPONSE_CONNECTION_CLOSE);
 					client.println();
 
-					sendSignalToDoor();
-
 					break;
-				}
-				else if (recv_byte == '\n')
-				{
-					current_line_is_blank = true;
-				}
-				else if (recv_byte != '\r')
-				{
-					current_line_is_blank = false;
-				}
+		        }
+
+		        if (recv_byte == '\n')
+		        {
+		        	current_lien_is_blank = true;
+		        }
+		        else if (recv_byte != '\r') {
+
+		          current_lien_is_blank = false;
+		        }
 			}
 		}
 

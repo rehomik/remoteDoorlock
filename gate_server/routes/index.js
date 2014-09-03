@@ -22,18 +22,20 @@ router.post('/', function (req, res) {
 
         debug("Request complete.");
 
-        res.json({
-          result: 'success'
-        });
+				res.status(200).send({
+
+					result: 'success'
+				}).end();
       });
 
       return;
     }
 
-    res.json({
+    res.status(200).send({
+
       result: 'fail',
       msg: 'invalid password'
-    });
+    }).end();
   });
 });
 

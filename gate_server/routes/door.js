@@ -21,17 +21,39 @@ exports.locker = {
       method: "GET",
       headers: {
         "Content-Type": "Content-Type: text/html",
-        "User-Agent": "Door lock Gate Server 0.1",
+        "User-Agent": "Door lock Gate Server",
         "Connection": "close"
       }
     };
 
+		// Send request to gate server.
     var http_req = http.request(opt, function (res) {
+
+			console.log("Res status code: " + res.statusCode);
+			console.log("Res header: " + res.headers);
 
       onCompleteCallback();
     });
 
-    http_req.end();
+		// handle error.
+		http_req.on('error', function(e) {
+
+			console.log('request error: ' + e.message);
+		});
+
+		// handle time out.
+		http_req.on('socket', function (socket) {
+
+			socket.setTimeout(3000);
+			socket.on('timeout', function() {
+
+				console.log("request aborted")
+
+				http_req.abort();
+			});
+		});
+
+		http_req.end();
   }
 };
 
