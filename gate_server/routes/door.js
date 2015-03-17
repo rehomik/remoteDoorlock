@@ -13,7 +13,7 @@ exports.locker = {
 
   request: function (onCompleteCallback) {
 
-    console.log("Send signal to door server");
+    debug("Send signal to door server");
 
     var opt = {
       host: "220.69.74.136",
@@ -21,28 +21,39 @@ exports.locker = {
       method: "GET",
       headers: {
         "Content-Type": "Content-Type: text/html",
-        "User-Agent": "IMRLAB Door lock Gate Server",
-        "Connection": "close",
-        "Content-Length": 0
+        "User-Agent": "Door lock Gate Server",
+        "Connection": "close"
       }
     };
 
-    var http_req = http.request(opt, function (err, res, body) {
+		// Send request to gate server.
+    var http_req = http.request(opt, function (res) {
 
-      console.log("Response complete from door lock");
+			console.log("Res status code: " + res.statusCode);
+			console.log("Res header: " + res.headers);
 
-      if ( (!err) && (200 == res.statusCode) ) {
-
-        onCompleteCallback(true);
-
-        return;
-      }
-
-      onCompleteCallback(false);
-
+      onCompleteCallback();
     });
 
-    http_req.end();
+		// handle error.
+		http_req.on('error', function(e) {
+
+			console.log('request error: ' + e.message);
+		});
+
+		// handle time out.
+		http_req.on('socket', function (socket) {
+
+			socket.setTimeout(3000);
+			socket.on('timeout', function() {
+
+				console.log("request aborted")
+
+				http_req.abort();
+			});
+		});
+
+		http_req.end();
   }
 };
 

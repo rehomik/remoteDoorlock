@@ -18,34 +18,24 @@ router.post('/', function (req, res) {
 
     if (result) {
 
-      restful_api.sendSignalToDoor(function onComplete(result) {
+      restful_api.sendSignalToDoor(function onComplete() {
 
         debug("Request complete.");
 
-        var return_code = 'success';
+				res.status(200).send({
 
-        if (!result) {
-
-          return_code = "fail";
-        }
-
-        res.status(200).json({
-          
-          result: return_code
-        });
-
+					result: 'success'
+				}).end();
       });
 
       return;
     }
 
-    res.json(
-      200,
-      {
-        result: 'fail',
-        msg: 'invalid password'
-      }
-    );
+    res.status(200).send({
+
+      result: 'fail',
+      msg: 'invalid password'
+    }).end();
   });
 });
 
